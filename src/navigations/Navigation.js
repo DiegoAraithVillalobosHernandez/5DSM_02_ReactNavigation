@@ -1,10 +1,12 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Icon } from "react-native-elements";
 import Profile from "../screens/Profile";
-import Index from "../screens/Index";
+//import Index from "../screens/Index";
 import Smart from "../screens/Smart";
 import SmartGo from "../screens/SmartGo";
+import IndexStack from "./IndexStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,6 +19,7 @@ export default function Navigation() {
         tabBarOptions={{
           inactiveTintColor:"green",
           activeTintColor:"red" }}
+
         screenOptions={ ({route}) => ({
             tabBarIcon:({color})=>screenOpt(route, color)
           })
@@ -24,7 +27,7 @@ export default function Navigation() {
       >
         <Tab.Screen
           name="index"
-          component={Index}
+          component={IndexStack}
           options={{ title: "Inicio" }}
         />
         <Tab.Screen
@@ -47,8 +50,28 @@ export default function Navigation() {
   );
 
   function screenOpt(route, color){
+    let icon;
+
+    switch(route.name){
+      case "index":
+        icon = "view-grid-outline"
+        break;
+      case "smart":
+        icon = "weight-lifter"
+        break;
+      case "smart-go":
+        icon = "google"
+        break;
+      case "profile":
+        icon = "account-outline"
+        break;
+    }
     return(
-      
+      <Icon 
+      type="material-community"
+      name={icon}
+      size={22}
+      color={color}/>
     )
   }
 }

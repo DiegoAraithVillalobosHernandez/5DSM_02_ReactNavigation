@@ -2,11 +2,14 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
-import Profile from "../screens/Profile";
+//import Profile from "../screens/Profile";
 //import Index from "../screens/Index";
-import Smart from "../screens/Smart";
-import SmartGo from "../screens/SmartGo";
+//import Smart from "../screens/Smart";
+//import SmartGo from "../screens/SmartGo";
 import IndexStack from "./IndexStack";
+import SmartStack from "./SmartStack";
+import SmartGoStack from "./SmartGoStack";
+import ProfileStack from "./ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +18,7 @@ export default function Navigation() {
     <NavigationContainer>
       <Tab.Navigator
         //Screen inicial
-        initialRouteName="smart"
+        initialRouteName="index"
         tabBarOptions={{
           inactiveTintColor:"green",
           activeTintColor:"red" }}
@@ -32,17 +35,17 @@ export default function Navigation() {
         />
         <Tab.Screen
           name="smart"
-          component={Smart}
+          component={SmartStack}
           options={{ title: "Smart" }}
         />
         <Tab.Screen
           name="smart-go"
-          component={SmartGo}
+          component={SmartGoStack}
           options={{ title: "SmartGo" }}
         />
         <Tab.Screen
           name="profile"
-          component={Profile}
+          component={ProfileStack}
           options={{ title: "Perfil" }}
         />
       </Tab.Navigator>

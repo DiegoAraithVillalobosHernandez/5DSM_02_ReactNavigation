@@ -16,7 +16,7 @@ export default function Index(props){
             />
             <Button
             title="Ir a Training"
-            onPress={()=>{navigation.navigate('smart', {screen: 'training'})}}
+            onPress={()=>{navigation.navigate("smart", {screen: "training"})}}
             />
         </View>
     )

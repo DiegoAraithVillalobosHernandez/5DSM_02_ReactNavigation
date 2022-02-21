@@ -16,7 +16,7 @@ export default function IndexStack() {
         options={{title: "SmartX"}}
         />
         <Stack.Screen
-        name="training"
+        name='training'
         component={Training}
         options={{ title: "TrainingX" }}
       />

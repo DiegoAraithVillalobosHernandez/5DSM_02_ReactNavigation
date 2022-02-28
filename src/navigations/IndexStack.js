@@ -16,6 +16,7 @@ export default function IndexStack(props) {
         name="index"
         component={Index}
         options={{ 
+          headerShown: false,
           title: "InicioX",
           headerLeft: () => 
             <Icon

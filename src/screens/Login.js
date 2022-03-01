@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { Divider } from 'react-native-elements'
+//hug, se usa si el componente no se encuentra dentro de un stack, para poder acceder a la navegacion
+import { useNavigation } from '@react-navigation/native'; 
 
-export default function Login() {
+export default function Login(props) {
+  console.log(props)
   return (
     <ScrollView>
       <Image 
@@ -18,13 +21,26 @@ export default function Login() {
       /> */}
       <View style={styles.viewContainer}>
         <Text>Formulario Login</Text>
-        <Text>Registrate</Text>
+        <CrearCuenta/>
       </View>
       <Divider style={styles.divider}/>
       <Text>Redes Sociales</Text>
     </ScrollView>
   )
+
+  function CrearCuenta(){
+    const navigation = useNavigation();
+    return(
+      <Text style={styles.textRegister}>
+        ¿Aún no tienes cuenta {" "}
+        <Text style={styles.btnRegistrar} onPress={() => navigation.navigate('register')}>
+          Registrate aquí</Text>
+      </Text>
+    )
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   logo:{

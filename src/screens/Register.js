@@ -1,29 +1,34 @@
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
-import React from 'react'
-import FormRegister from '../components/account/FormRegister'
+import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
+import React, { useRef } from "react";
+import FormRegister from "../components/account/FormRegister";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Toast from "react-native-easy-toast";
 
 export default function Register() {
+  const toastRef = useRef();
+  //console.log(toastRef)
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <Image
-      style={styles.logo}
-      resizeMode= "contain"
-      source={require( '../assets/logo_utez.png')}
+        style={styles.logo}
+        resizeMode="contain"
+        source={require("../assets/logo_utez.png")}
       />
       <View style={styles.viewForm}>
-        <FormRegister/>
+        <FormRegister toastRef={toastRef} />
       </View>
-    </ScrollView>
-  )
+      <Toast ref={toastRef} position="center" opacity={0.8}/>
+    </KeyboardAwareScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-  logo:{
-    height:100,
+  logo: {
+    height: 100,
     width: 200,
-    alignSelf: "center"
+    alignSelf: "center",
   },
-  viewForm:{
-    marginHorizontal:40
-  }
-})
+  viewForm: {
+    marginHorizontal: 40,
+  },
+});

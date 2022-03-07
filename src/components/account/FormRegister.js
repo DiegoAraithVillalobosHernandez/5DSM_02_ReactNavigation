@@ -1,19 +1,58 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import { Input, Icon, Button } from "react-native-elements";
+import { validateEmail } from "../../utils/validation";
+import { isEmpty, size } from "lodash";
+import firebase from "firebase";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 
-export default function FormRegister() {
+export default function FormRegister(props) {
+  const navigation = useNavigation();
+  
+  const {toastRef} = props;
   const [showPass, setShowPass] = useState(false);
   const [showPassRepeat, setShowPassRepeat] = useState(false);
   const [formData, setFormData] = useState(defaultFormValues());
 
   const onSubmit = () => {
-    console.log("OnSubmit");
+    //console.log("OnSubmit");
+    //console.log(formData)
+    if (isEmpty(formData.email)|| isEmpty(formData.password) || isEmpty(formData.passwordRepeat)) {
+      toastRef.current.show("Hay campos vacíos")
+      //console.log("Hay campos vacíos")
+    } 
+    else if (!validateEmail(formData.email)){
+      toastRef.current.show("Introduce un email válido")
+    }
+    else if(size(formData.password) < 6){
+      toastRef.current.show("La contraseña debe ser al menos de 6 caracteres")
+    }
+    else if(formData.password !== formData.passwordRepeat){
+      toastRef.current.show("Las contraseñas no coinciden")
+    }
+    else {
+      firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)
+      .then(response => {
+        navigation.navigate("index")
+      })
+      .catch(err => {
+        toastRef.current.show("Este correo ya fue registrado")
+      })
+    }
+  }
+
+  const capturarDatos = (event, type) =>{
+    //console.log(type) 
+    //console.log(event.nativeEvent.text)
+    //Con spread podemos guardar los valores de todos los campos
+    //añadiendo el nuevo a los antes registrados
+    setFormData({...formData,[type]:event.nativeEvent.text})
   }
 
   return (
     <View style={styles.formContainer}>
       <Input
+        onChange={(e) => capturarDatos(e, "email")}
         placeholder="Correo electrónico"
         containerStyle={styles.inputForm}
         rightIcon={
@@ -21,6 +60,7 @@ export default function FormRegister() {
         }
       />
       <Input
+         onChange={(e) => capturarDatos(e, "password")}
         placeholder="Contraseña"
         containerStyle={styles.inputForm}
         password={true}
@@ -35,6 +75,7 @@ export default function FormRegister() {
         }
       />
       <Input
+      onChange={(e) => capturarDatos(e, "passwordRepeat")}
         placeholder="Repetir Contraseña"
         containerStyle={styles.inputForm}
         password={true}

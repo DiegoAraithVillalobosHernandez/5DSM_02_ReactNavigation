@@ -5,6 +5,7 @@ import { validateEmail } from "../../utils/validation";
 import { isEmpty, size } from "lodash";
 import firebase from "firebase";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import Loading from "../Loading";
 
 export default function FormRegister(props) {
   const navigation = useNavigation();
@@ -13,6 +14,7 @@ export default function FormRegister(props) {
   const [showPass, setShowPass] = useState(false);
   const [showPassRepeat, setShowPassRepeat] = useState(false);
   const [formData, setFormData] = useState(defaultFormValues());
+  const [loading, setLoading] = useState(false)
 
   const onSubmit = () => {
     //console.log("OnSubmit");
@@ -31,11 +33,14 @@ export default function FormRegister(props) {
       toastRef.current.show("Las contraseñas no coinciden")
     }
     else {
+      setLoading(true)
       firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)
       .then(response => {
+        setLoading(false)
         navigation.navigate("index")
       })
       .catch(err => {
+        setLoading(false)
         toastRef.current.show("Este correo ya fue registrado")
       })
     }
@@ -94,6 +99,10 @@ export default function FormRegister(props) {
         containerStyle={styles.containerBtnRegister}
         buttonStyle={styles.btnRegister}
         onPress={() => onSubmit()}
+      />
+      <Loading
+      isVisible={loading}
+      text={"Creando cuenta"}
       />
     </View>
   );

@@ -3,6 +3,7 @@ import React from 'react'
 import { Divider } from 'react-native-elements'
 //hug, se usa si el componente no se encuentra dentro de un stack, para poder acceder a la navegacion
 import { useNavigation } from '@react-navigation/native'; 
+import FormLogin from '../components/account/FormLogin';
 
 export default function Login(props) {
   console.log(props)
@@ -20,7 +21,7 @@ export default function Login(props) {
       source={{uri: 'https://lacensura.com/wp-content/uploads/2021/06/utez_14-01-21.jpg'}}
       /> */}
       <View style={styles.viewContainer}>
-        <Text>Formulario Login</Text>
+        <FormLogin/>
         <CrearCuenta/>
       </View>
       <Divider style={styles.divider}/>

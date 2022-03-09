@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useRef} from 'react'
 import { Divider } from 'react-native-elements'
 //hug, se usa si el componente no se encuentra dentro de un stack, para poder acceder a la navegacion
 import { useNavigation } from '@react-navigation/native'; 
 import FormLogin from '../components/account/FormLogin';
+import Toast from 'react-native-easy-toast';
 
 export default function Login(props) {
-  console.log(props)
+  const toastRef = useRef();
   return (
     <ScrollView>
       <Image 
@@ -21,11 +22,16 @@ export default function Login(props) {
       source={{uri: 'https://lacensura.com/wp-content/uploads/2021/06/utez_14-01-21.jpg'}}
       /> */}
       <View style={styles.viewContainer}>
-        <FormLogin/>
+        <FormLogin toastRef={toastRef}/>
         <CrearCuenta/>
       </View>
       <Divider style={styles.divider}/>
       <Text>Redes Sociales</Text>
+      <Toast
+      ref={toastRef}
+      position="center"
+      opacity={0.8}
+      />
     </ScrollView>
   )
 

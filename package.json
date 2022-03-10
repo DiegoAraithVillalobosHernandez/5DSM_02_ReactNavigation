@@ -16,6 +16,8 @@
     "@react-navigation/native": "~5.x",
     "@react-navigation/stack": "~5.2.10",
     "expo": "~44.0.0",
+    "expo-image-picker": "~8.x.x",
+    "expo-permissions": "~8.x.x",
     "expo-status-bar": "~1.2.0",
     "firebase": "^8.10.1",
     "lodash": "^4.17.21",

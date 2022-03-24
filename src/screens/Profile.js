@@ -14,13 +14,20 @@ export default function Profile() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState(null);
+  const [reloadUserInfo, setReloadUserInfo] = useState(false)
 
+  /*
+  Aqui recargamos la imagen, y tambien el nombre de usuario 
+  para el nombre lo que hacemos es monitorear mediante un estado (reloadUserInfo) y lo pasamos por props (setReloadUserInfo)
+  hasta el componente donde se ve el cambio
+  */
   useEffect(() => {
     (async () => {
       const user = firebase.auth().currentUser;
       setUserInfo(user);
     })();
-  }, []);
+    setReloadUserInfo(false)
+  }, [reloadUserInfo]);
 
   //Es como un if ternario
   //{variableEvaluar && true}
@@ -37,7 +44,7 @@ export default function Profile() {
       <UserOptions 
       userInfo={userInfo}
       toastRef={toastRef}
-      
+      setReloadUserInfo={setReloadUserInfo}
       />
       <Button
         title={"Cerrar sesión"}

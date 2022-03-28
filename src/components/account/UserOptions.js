@@ -4,21 +4,25 @@ import { ListItem } from "react-native-elements";
 import { map } from "lodash"; //Es como for each
 import Modal from "../Modal";
 import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
+import { useNavigation } from "@react-navigation/native";
 
 export default function UserOptions(props) {
-  const {userInfo, toastRef, setReloadUserInfo} = props
+  const navigation = useNavigation();
+  const { userInfo, toastRef, setReloadUserInfo } = props;
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
 
   const selectComponent = (key) => {
     switch (key) {
       case "displayName":
-        setRenderComponent(<ChangeDisplayNameForm 
-        displayName = {userInfo.displayName}
-        setShowModal= {setShowModal}
-        toastRef= {toastRef}
-        setReloadUserInfo={setReloadUserInfo}
-        />);
+        setRenderComponent(
+          <ChangeDisplayNameForm
+            displayName={userInfo.displayName}
+            setShowModal={setShowModal}
+            toastRef={toastRef}
+            setReloadUserInfo={setReloadUserInfo}
+          />
+        );
         setShowModal(true);
         break;
       case "email":
@@ -28,6 +32,8 @@ export default function UserOptions(props) {
       case "password":
         setRenderComponent(<Text>Cambiar contraseña</Text>);
         setShowModal(true);
+      case "location":
+        navigation.navigate("location");
         break;
     }
   };
@@ -95,7 +101,7 @@ function generateOptions(selectComponent) {
       iconNameL: "map",
       iconColor: "#ccc",
       iconNameR: "chevron-right",
-      onPress: () => selectComponent("password"),
+      onPress: () => selectComponent("location"),
     },
   ];
 }
